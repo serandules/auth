@@ -7,7 +7,7 @@
         "email": "serandives@gmail.com"
     },
     "dependencies": {
-        "auth": "serandules/auth#master"
+        "token": "serandules/token#master"
     },
     "repository": {
         "type": "git",
