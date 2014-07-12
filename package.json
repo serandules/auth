@@ -6,9 +6,7 @@
         "name": "serandives",
         "email": "serandives@gmail.com"
     },
-    "dependencies": {
-        "token": "serandules/token#master"
-    },
+    "dependencies": {},
     "repository": {
         "type": "git",
         "url": "git://github.com/serandules/auth.git"

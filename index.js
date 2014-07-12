@@ -1,6 +1,4 @@
-var Token = require('token');
-
-module.exports = function (options) {
+module.exports = function (token, options) {
     return function (req, res, next) {
         var path = req.path;
         var open = options.open;
@@ -27,26 +25,21 @@ module.exports = function (options) {
             });
             return;
         }
-        var token = match[1];
-        //TODO: validate auth header
-        Token.findOne({
-            _id: token
-        })
-            .exec(function (err, token) {
-                if (err) {
-                    res.send(500, {
-                        error: err
-                    });
-                    return;
-                }
-                if (!token) {
-                    res.send(401, {
-                        error: 'invalid token'
-                    });
-                    return;
-                }
-                req.token = token;
-                next();
-            });
+        token(match[1], function (err, token) {
+            if (err) {
+                res.send(500, {
+                    error: err
+                });
+                return;
+            }
+            if (!token) {
+                res.send(401, {
+                    error: 'invalid token'
+                });
+                return;
+            }
+            req.token = token;
+            next();
+        });
     };
 };
