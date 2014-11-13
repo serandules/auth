@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Token = mongoose.model('Token');
+var Token = require('token');
 
 module.exports = function (options) {
     return function (req, res, next) {
