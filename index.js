@@ -14,8 +14,18 @@ module.exports = function (options) {
                 }
             }
         }
+        var hybrid;
         var auth = req.headers['authorization'];
         if (!auth) {
+            hybrid = options.hybrid;
+            if (hybrid) {
+                length = hybrid.length;
+                for (i = 0; i < length; i++) {
+                    if (new RegExp(hybrid[i], 'i').test(path)) {
+                        return next();
+                    }
+                }
+            }
             res.send(401, {
                 error: 'missing authorization header'
             });
