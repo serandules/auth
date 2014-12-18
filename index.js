@@ -52,7 +52,7 @@ module.exports = function (options) {
                 }
                 if (!token) {
                     res.send(401, {
-                        error: 'invalid token'
+                        error: 'unauthorized token'
                     });
                     return;
                 }
