@@ -41,7 +41,7 @@ module.exports = function (options) {
         var token = match[1];
         //TODO: validate auth header
         Token.findOne({
-            _id: token
+            access: token
         })
             .exec(function (err, token) {
                 if (err) {
