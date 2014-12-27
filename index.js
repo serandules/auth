@@ -56,6 +56,13 @@ module.exports = function (options) {
                     });
                     return;
                 }
+                console.log('client token expires in : ' + token.accessibility());
+                if (token.accessibility() === 0) {
+                    res.send(401, {
+                        error: 'token expired'
+                    });
+                    return;
+                }
                 req.token = token;
                 next();
             });
