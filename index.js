@@ -1,3 +1,4 @@
+var debug = require('debug')('serandules-auth');
 var mongoose = require('mongoose');
 var Token = require('token');
 
@@ -56,7 +57,7 @@ module.exports = function (options) {
                     });
                     return;
                 }
-                console.log('client token expires in : ' + token.accessibility());
+                debug('client token expires in : ' + token.accessibility());
                 if (token.accessibility() === 0) {
                     res.send(401, {
                         error: 'token expired'
