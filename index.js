@@ -1,4 +1,4 @@
-var debug = require('debug')('serandules-auth');
+var debug = require('debug')('serandules:auth');
 var mongoose = require('mongoose');
 var Token = require('token');
 
