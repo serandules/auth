@@ -27,14 +27,14 @@ module.exports = function (options) {
                     }
                 }
             }
-            res.send(401, {
+            res.status(401).send({
                 error: 'missing authorization header'
             });
             return;
         }
         var match = /^\s*Bearer\s+(.*)$/g.exec(auth);
         if (!match) {
-            res.send(401, {
+            res.status(401).send({
                 error: 'invalid authorization header'
             });
             return;
@@ -46,20 +46,20 @@ module.exports = function (options) {
         })
             .exec(function (err, token) {
                 if (err) {
-                    res.send(500, {
+                    res.status(500).send({
                         error: err
                     });
                     return;
                 }
                 if (!token) {
-                    res.send(401, {
+                    res.status(401).send({
                         error: 'unauthorized token'
                     });
                     return;
                 }
                 debug('client token expires in : ' + token.accessibility());
                 if (token.accessibility() === 0) {
-                    res.send(401, {
+                    res.status(401).send({
                         error: 'token expired'
                     });
                     return;
