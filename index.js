@@ -43,7 +43,7 @@ module.exports = function (options) {
         //TODO: validate auth header
         Token.findOne({
             access: token
-        })
+        }).populate('client')
             .exec(function (err, token) {
                 if (err) {
                     res.status(500).send({
