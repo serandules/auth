@@ -2,6 +2,9 @@ var log = require('logger')('auth');
 var mongoose = require('mongoose');
 var Token = require('token');
 
+require('client');
+require('user');
+
 module.exports = function (options) {
     return function (req, res, next) {
         var path = req.path;
