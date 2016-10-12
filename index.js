@@ -30,16 +30,18 @@ module.exports = function (options) {
                     }
                 }
             }
-            res.status(401).send({
-                error: 'missing authorization header'
-            });
+            res.status(401).send([{
+                code: 401,
+                message: 'Unauthorized'
+            }]);
             return;
         }
         var match = /^\s*Bearer\s+(.*)$/g.exec(auth);
         if (!match) {
-            res.status(401).send({
-                error: 'invalid authorization header'
-            });
+            res.status(401).send([{
+                code: 401,
+                message: 'Unsupported Authorization'
+            }]);
             return;
         }
         var token = match[1];
@@ -49,22 +51,26 @@ module.exports = function (options) {
         }).populate('client')
             .exec(function (err, token) {
                 if (err) {
-                    res.status(500).send({
-                        error: err
-                    });
+                    log.error(err);
+                    res.status(500).send([{
+                        code: 500,
+                        message: 'Internal Server Error'
+                    }]);
                     return;
                 }
                 if (!token) {
-                    res.status(401).send({
-                        error: 'unauthorized token'
-                    });
+                    res.status(401).send([{
+                        code: 401,
+                        message: 'Unauthorized'
+                    }]);
                     return;
                 }
                 log.debug('client token expires in : %s', token.accessibility());
                 if (token.accessibility() === 0) {
-                    res.status(401).send({
-                        error: 'token expired'
-                    });
+                    res.status(401).send([{
+                        code: 401,
+                        message: 'Unauthorized'
+                    }]);
                     return;
                 }
                 req.token = token;
