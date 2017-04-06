@@ -1,5 +1,4 @@
 var log = require('logger')('auth');
-var mongoose = require('mongoose');
 var Token = require('token');
 
 require('client');
@@ -30,18 +29,18 @@ module.exports = function (options) {
                     }
                 }
             }
-            res.status(401).send([{
+            res.status(401).send({
                 code: 401,
                 message: 'Unauthorized'
-            }]);
+            });
             return;
         }
         var match = /^\s*Bearer\s+(.*)$/g.exec(auth);
         if (!match) {
-            res.status(401).send([{
+            res.status(401).send({
                 code: 401,
                 message: 'Unsupported Authorization'
-            }]);
+            });
             return;
         }
         var token = match[1];
@@ -52,25 +51,24 @@ module.exports = function (options) {
             .exec(function (err, token) {
                 if (err) {
                     log.error(err);
-                    res.status(500).send([{
+                    res.status(500).send({
                         code: 500,
                         message: 'Internal Server Error'
-                    }]);
+                    });
                     return;
                 }
                 if (!token) {
-                    res.status(401).send([{
+                    res.status(401).send({
                         code: 401,
                         message: 'Unauthorized'
-                    }]);
+                    });
                     return;
                 }
-                log.debug('client token expires in : %s', token.accessibility());
                 if (token.accessibility() === 0) {
-                    res.status(401).send([{
+                    res.status(401).send({
                         code: 401,
                         message: 'Unauthorized'
-                    }]);
+                    });
                     return;
                 }
                 req.token = token;
