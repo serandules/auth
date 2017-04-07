@@ -9,9 +9,9 @@
   "dependencies": {
     "logger": "serandules/logger#master",
     "errors": "serandules/errors#master",
-    "token": "serandules/token#master",
-    "client": "serandules/client#master",
-    "user": "serandules/user#master"
+    "model-tokens": "serandules/model-tokens#master",
+    "model-clients": "serandules/model-clients#master",
+    "model-users": "serandules/model-users#master"
   },
   "repository": {
     "type": "git",

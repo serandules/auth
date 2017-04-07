@@ -1,9 +1,9 @@
 var log = require('logger')('auth');
 var errors = require('errors');
 
-var Token = require('token');
-require('client');
-require('user');
+var Token = require('model-tokens');
+require('model-clients');
+require('model-users');
 
 module.exports = function (options) {
     return function (req, res, next) {
