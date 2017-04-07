@@ -1,6 +1,7 @@
 var log = require('logger')('auth');
-var Token = require('token');
+var errors = require('errors');
 
+var Token = require('token');
 require('client');
 require('user');
 
@@ -29,19 +30,11 @@ module.exports = function (options) {
                     }
                 }
             }
-            res.status(401).send({
-                code: 401,
-                message: 'Unauthorized'
-            });
-            return;
+            return res.pond(errors.unauthorized())
         }
         var match = /^\s*Bearer\s+(.*)$/g.exec(auth);
         if (!match) {
-            res.status(401).send({
-                code: 401,
-                message: 'Unsupported Authorization'
-            });
-            return;
+            return res.pond(errors.unsupportedAuth());
         }
         var token = match[1];
         //TODO: validate auth header
@@ -51,25 +44,13 @@ module.exports = function (options) {
             .exec(function (err, token) {
                 if (err) {
                     log.error(err);
-                    res.status(500).send({
-                        code: 500,
-                        message: 'Internal Server Error'
-                    });
-                    return;
+                    return res.pond(errors.serverError());
                 }
                 if (!token) {
-                    res.status(401).send({
-                        code: 401,
-                        message: 'Unauthorized'
-                    });
-                    return;
+                    return res.pond(errors.unauthorized());
                 }
                 if (token.accessibility() === 0) {
-                    res.status(401).send({
-                        code: 401,
-                        message: 'Unauthorized'
-                    });
-                    return;
+                    return res.pond(errors.unauthorized());
                 }
                 req.token = token;
                 next();

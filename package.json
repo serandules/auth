@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "logger": "serandules/logger#master",
-    "mongoose": "4.*",
+    "errors": "serandules/errors#master",
     "token": "serandules/token#master",
     "client": "serandules/client#master",
     "user": "serandules/user#master"
