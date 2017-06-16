@@ -7,9 +7,9 @@ require('model-users');
 
 module.exports = function (options) {
     return function (req, res, next) {
-        options = options[req.method] || {};
+        var o = options[req.method] || {};
         var path = req.path;
-        var open = options.open;
+        var open = o.open;
         var i, length;
         if (open) {
             length = open.length;
@@ -22,7 +22,7 @@ module.exports = function (options) {
         var hybrid;
         var auth = req.headers['authorization'];
         if (!auth) {
-            hybrid = options.hybrid;
+            hybrid = o.hybrid;
             if (hybrid) {
                 length = hybrid.length;
                 for (i = 0; i < length; i++) {
