@@ -7,6 +7,7 @@ require('model-users');
 
 module.exports = function (options) {
     return function (req, res, next) {
+        options = options[req.method] || {};
         var path = req.path;
         var open = options.open;
         var i, length;
@@ -40,7 +41,7 @@ module.exports = function (options) {
         //TODO: validate auth header
         Token.findOne({
             access: token
-        }).populate('client')
+        }).populate('client user')
             .exec(function (err, token) {
                 if (err) {
                     log.error(err);
