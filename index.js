@@ -54,6 +54,7 @@ module.exports = function (options) {
                     return res.pond(errors.unauthorized());
                 }
                 req.token = token;
+                req.user = token.user;
                 next();
             });
     };
