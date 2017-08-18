@@ -7,26 +7,17 @@ require('model-users');
 
 module.exports = function (options) {
     return function (req, res, next) {
-        var o = options[req.method] || {};
+        var o;
+        var i;
+        var length;
         var path = req.path;
-        var open = o.open;
-        var i, length;
-        if (open) {
-            length = open.length;
-            for (i = 0; i < length; i++) {
-                if (new RegExp(open[i], 'i').test(path)) {
-                    return next();
-                }
-            }
-        }
-        var hybrid;
         var auth = req.headers['authorization'];
         if (!auth) {
-            hybrid = o.hybrid;
-            if (hybrid) {
-                length = hybrid.length;
+            o = options[req.method];
+            if (o) {
+                length = o.length;
                 for (i = 0; i < length; i++) {
-                    if (new RegExp(hybrid[i], 'i').test(path)) {
+                    if (new RegExp(o[i], 'i').test(path)) {
                         return next();
                     }
                 }
@@ -38,7 +29,6 @@ module.exports = function (options) {
             return res.pond(errors.unsupportedAuth());
         }
         var token = match[1];
-        //TODO: validate auth header
         Token.findOne({
             access: token
         }).populate('client user')
