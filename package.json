@@ -11,7 +11,8 @@
     "errors": "serandules/errors#master",
     "model-tokens": "serandules/model-tokens#master",
     "model-clients": "serandules/model-clients#master",
-    "model-users": "serandules/model-users#master"
+    "model-users": "serandules/model-users#master",
+    "model-tiers": "serandules/model-tiers#master"
   },
   "repository": {
     "type": "git",

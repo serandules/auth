@@ -4,6 +4,7 @@ var errors = require('errors');
 var Token = require('model-tokens');
 require('model-clients');
 require('model-users');
+require('model-tiers');
 
 module.exports = function (options) {
     return function (req, res, next) {
@@ -31,7 +32,7 @@ module.exports = function (options) {
         var token = match[1];
         Token.findOne({
             access: token
-        }).populate('client user')
+        }).populate('client user tier')
             .exec(function (err, token) {
                 if (err) {
                     log.error(err);
