@@ -35,7 +35,7 @@ module.exports = function (options) {
         }).populate('client user tier')
             .exec(function (err, token) {
                 if (err) {
-                    log.error(err);
+                    log.error('tokens:find-one', err);
                     return res.pond(errors.serverError());
                 }
                 if (!token) {
