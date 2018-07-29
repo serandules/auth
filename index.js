@@ -38,7 +38,7 @@ module.exports = function (options) {
                     log.error('tokens:find-one', err);
                     return res.pond(errors.serverError());
                 }
-                if (!token) {
+                if (!token || !token.user) {
                     return res.pond(errors.unauthorized());
                 }
                 if (token.accessibility() === 0) {
