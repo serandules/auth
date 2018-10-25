@@ -7,6 +7,7 @@ require('model-users');
 require('model-tiers');
 
 module.exports = function (options) {
+    options = options || {};
     return function (req, res, next) {
         var o;
         var i;
