@@ -12,24 +12,16 @@ module.exports = function (options) {
   return function (req, res, next) {
     var otp = req.headers['x-otp'];
     if (otp) {
-      Otps.findOne({
-        value: otp
-      }).populate('user').exec(function (err, otp) {
+      Otps.findOneAndDelete({value: otp}).populate('user').exec(function (err, otp) {
         if (err) {
-          log.error('otps:find-one', err);
-          return next(errors.serverError());
+          return next(err);
         }
         if (!otp || !otp.user) {
           return next(errors.unauthorized());
         }
-        Otps.remove({_id: otp.id}, function (err) {
-          if (err) {
-            return next(err);
-          }
-          req.otp = otp;
-          req.user = otp.user;
-          next();
-        });
+        req.otp = otp;
+        req.user = otp.user;
+        next();
       });
       return;
     }
