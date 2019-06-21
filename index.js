@@ -1,5 +1,6 @@
 var log = require('logger')('auth');
 var errors = require('errors');
+var utils = require('utils');
 
 var Tokens = require('model-tokens');
 var Otps = require('model-otps');
