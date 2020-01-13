@@ -13,7 +13,7 @@ module.exports = function (options) {
   return function (req, res, next) {
     var otp = req.headers['x-otp'];
     if (otp) {
-      Otps.findOneAndDelete({value: otp}).populate('user').exec(function (err, otp) {
+      Otps.findOneAndDelete({strong: otp}).populate('user').exec(function (err, otp) {
         if (err) {
           return next(err);
         }
