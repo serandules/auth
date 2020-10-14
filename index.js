@@ -1,12 +1,10 @@
 var log = require('logger')('auth');
 var errors = require('errors');
-var utils = require('utils');
 
-var Tokens = require('model-tokens');
-var Otps = require('model-otps');
-require('model-clients');
-require('model-users');
-require('model-tiers');
+var models = require('models');
+
+var Tokens = models.tokens.model;
+var Otps = models.otps.model;
 
 module.exports = function (options) {
   options = options || {};
@@ -55,8 +53,9 @@ module.exports = function (options) {
     }
     var i;
     var length;
-    var path = req.path;
+    var model = req.ctx.model;
     var o = options[req.method];
+    var path = req.path.replace(new RegExp('^/' + model.modelName + '/?'), '/');
     if (o) {
       length = o.length;
       for (i = 0; i < length; i++) {
